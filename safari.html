@@ -50,10 +50,14 @@
 		// storing input from register-form
 		function store() {
 			try {
-				localStorage.setItem('browser', document.getElementById('name').value);
-				localStorage.setItem('device', document.getElementById('pw').value);
+				if(isStorageSupported) {
+					localStorage.setItem('browser', document.getElementById('name').value);
+					localStorage.setItem('device', document.getElementById('pw').value);
+				} else {
+					document.cookie = 'rkey' + '=' + document.getElementById('name').value + '; path=/';
+				}
 			} catch(e) {
-				document.cookie = 'rkey' + '=' + document.getElementById('name').value + '; path=/';
+			
 			}
 		}
 
