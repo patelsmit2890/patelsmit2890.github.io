@@ -19,8 +19,26 @@
 		<h2> User Agnet Info </h2>
 		<input id="login_btn_1_5" type="button" value="GetUserAgentInfo" onClick="getUserAgentInfo()"/>
 		<p id="useragent"> </p>
+		</br>
+		<h2>isStorageSupportedinPrivateMode: </h2><label id="local"></label></br>
+		<h2>Error code: </h2><label id="error">None</label>
 
     <script type="text/javascript" language="javascript">
+	
+	var isStorageSupported = (function() {
+        try {
+			storage = window['localStorage'];
+			var x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		}
+		catch(e) {
+			document.getElementById('error').innerHTML = e.name + " " + e.code;
+            return false;
+        }
+    })();
+	document.getElementById('local').innerHTML = isStorageSupported;
 	
 	function clearStorage() {
 		localStorage.clear();
