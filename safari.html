@@ -25,29 +25,29 @@
 
     <script type="text/javascript" language="javascript">
 	
-	var isStorageSupported = (function() {
-        try {
-			storage = window['localStorage'];
-			var x = '__storage_test__';
-			storage.setItem(x, x);
-			storage.removeItem(x);
-			return true;
+		var isStorageSupported = (function() {
+			try {
+				storage = window['localStorage'];
+				var x = '__storage_test__';
+				storage.setItem(x, x);
+				storage.removeItem(x);
+				return true;
+			}
+			catch(e) {
+				document.getElementById('error').innerHTML = e.name + " " + e.code;
+				return false;
+			}
+		})();
+		
+		document.getElementById('local').innerHTML = isStorageSupported;
+		
+		function clearStorage() {
+			localStorage.clear();
 		}
-		catch(e) {
-			document.getElementById('error').innerHTML = e.name + " " + e.code;
-            return false;
-        }
-    })();
-	document.getElementById('local').innerHTML = isStorageSupported;
-	
-	function clearStorage() {
-		localStorage.clear();
-	}
-	function clearSession() {
-		sessionStorage.clear();
-	}
+		function clearSession() {
+			sessionStorage.clear();
+		}
 
-		// storing input from register-form
 		function store() {
 			try {
 				if(isStorageSupported) {
@@ -61,7 +61,6 @@
 			}
 		}
 
-		// check if stored data from register-form is equal to entered data in the   login-form
 		function check() {
 			var storedName;
 			var storedPw;
@@ -69,7 +68,6 @@
 			try {
 			
 				if(isStorageSupported) {
-					// stored data from the register-form
 					var storedName = localStorage.getItem('browser');
 					var storedPw = localStorage.getItem('device');
 				} else {
@@ -87,16 +85,14 @@
 			
 			alert('browser:' + storedName + ' and device:' +storedPw);
 		}
+			
 		function checkSession() {
-
-			// stored data from the register-form
 			var storedName = sessionStorage.getItem('browser');
 			var storedPw = sessionStorage.getItem('device');
-
 			
-				alert('browser:' + storedName + ' and device:' +storedPw);
+			alert('browser:' + storedName + ' and device:' +storedPw);
 		}
-		
+			
 		function getUserAgentInfo(){
 			var info = navigator.userAgent;
 			document.getElementById('useragent').innerHTML = info;
