@@ -63,17 +63,22 @@
 			var storedPw;
 			var key = "rkey=";
 			try {
-				// stored data from the register-form
-				var storedName = localStorage.getItem('browser');
-				var storedPw = localStorage.getItem('device');
-			} catch(e) {
-				var cookies = document.cookie.split(';');
-				for (var i = 0; i < cookies.length; i++) {
-					var c = cookies[i];
-					while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-					if (c.indexOf(key) == 0)
-						storedName = c.substring(key.length, c.length);
+			
+				if(isStorageSupported) {
+					// stored data from the register-form
+					var storedName = localStorage.getItem('browser');
+					var storedPw = localStorage.getItem('device');
+				} else {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var c = cookies[i];
+						while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+						if (c.indexOf(key) == 0)
+							storedName = c.substring(key.length, c.length);
+					}
 				}
+			} catch(e) {
+				
 			}
 			
 			alert('browser:' + storedName + ' and device:' +storedPw);
