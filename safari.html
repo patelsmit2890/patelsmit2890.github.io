@@ -49,19 +49,33 @@
 
 		// storing input from register-form
 		function store() {
-			localStorage.setItem('browser', document.getElementById('name').value);
-			localStorage.setItem('device', document.getElementById('pw').value);
+			try {
+				localStorage.setItem('browser', document.getElementById('name').value);
+				localStorage.setItem('device', document.getElementById('pw').value);
+			} catch(e) {
+				document.cookie = 'rkey' + '=' + document.getElementById('name').value + '; path=/';
+			}
 		}
 
 		// check if stored data from register-form is equal to entered data in the   login-form
 		function check() {
-
-			// stored data from the register-form
-			var storedName = localStorage.getItem('browser');
-			var storedPw = localStorage.getItem('device');
-
+			var storedName;
+			var storedPw
+			try {
+				// stored data from the register-form
+				var storedName = localStorage.getItem('browser');
+				var storedPw = localStorage.getItem('device');
+			} catch(e) {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var c = cookies[i];
+					while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+					if (c.indexOf('rkey=') == 0)
+						storedName = JSON.parse(c.substring(key.length, c.length));
+				}
+			}
 			
-				alert('browser:' + storedName + ' and device:' +storedPw);
+			alert('browser:' + storedName + ' and device:' +storedPw);
 		}
 		function checkSession() {
 
